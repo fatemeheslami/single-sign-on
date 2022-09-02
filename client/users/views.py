@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 import httpx
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as user_logout
+from django.contrib import messages
 
 def login (request):
     next_path = request.GET.get('next' , '/')
@@ -12,3 +14,11 @@ def login (request):
 @login_required
 def profile(request):
     return render(request , 'users/profile.html')
+
+def home_page(request):
+    return render(request , 'users/home.html')
+    
+def logout(request):
+    user_logout(request)
+    messages.info(request, 'You have successfully logged out.')
+    return redirect('home_page')

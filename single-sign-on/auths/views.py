@@ -3,7 +3,8 @@ from multiprocessing import context
 from django.shortcuts import render , redirect
 from .models import Authentication, my_function
 from django.http import JsonResponse
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
+
 
 # Create your views here.
 def request_token(request):
@@ -47,3 +48,23 @@ def check_auth_token(request):
         return JsonResponse({'user' : my_user})
     except:
         return JsonResponse({'status':'false','message': '403 Forbidden'}, status=403)
+
+def register(request) :
+    if request.method == 'POST' :
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            request_token = request.GET['request_token']
+            record = Authentication.objects.get(request_token = request_token)
+            record.auth_token = my_function()
+            record.user = user
+            record.save()
+            return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+    else:
+        form = UserCreationForm()
+    context = {
+        'form' : form,
+        'title' : 'registration page'
+    }      
+    return render(request , 'auths/register.html' , context)  
+
