@@ -4,6 +4,12 @@ from django.shortcuts import render , redirect
 from .models import Authentication, my_function
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as user_login
+from django.urls import reverse
+from django.contrib.auth import logout as user_logout
+from django.contrib import messages
 
 
 # Create your views here.
@@ -17,13 +23,12 @@ def login(request):
     if(request.method == 'POST'):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            request_token = request.GET['request_token']
-            record = Authentication.objects.get(request_token = request_token)
-            record.auth_token = my_function()
-            record.user = user
-            record.save()
-            return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+            user = authenticate(
+                username = form.cleaned_data['username'],
+                password = form.cleaned_data['password']
+            )
+            user_login(request , user)
+            return redirect(reverse('get_auth_token') + '?request_token=' + request.GET['request_token'])
     
     else:
         form = AuthenticationForm()    
@@ -34,6 +39,15 @@ def login(request):
     }
     return render(request , 'auths/login.html' , context=context)
 
+@login_required
+def get_auth_token(request):
+    request_token = request.GET['request_token']
+    record = Authentication.objects.get(request_token = request_token)
+    record.auth_token = my_function()
+    record.user = request.user
+    record.save()
+    return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+    
 def check_auth_token(request):
     try:
         auth_token = request.GET['auth_token']
@@ -53,13 +67,12 @@ def register(request) :
     if request.method == 'POST' :
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            request_token = request.GET['request_token']
-            record = Authentication.objects.get(request_token = request_token)
-            record.auth_token = my_function()
-            record.user = user
-            record.save()
-            return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+            user = authenticate(
+                username = form.cleaned_data['username'],
+                password = form.cleaned_data['password']
+            )
+            user_login(request , user)
+            return redirect(reverse('get_auth_token') + '?request_token=' + request.GET['request_token'])
     else:
         form = UserCreationForm()
     context = {
@@ -68,3 +81,7 @@ def register(request) :
     }      
     return render(request , 'auths/register.html' , context)  
 
+def logout(request):
+    user_logout(request)
+    messages.info(request, 'You have successfully logged out.')
+    return redirect(request.GET('next'))

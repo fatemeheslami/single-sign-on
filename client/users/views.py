@@ -9,7 +9,7 @@ def login (request):
     redirect_url = request.build_absolute_uri(next_path)
     res = httpx.get(f"http://127.0.0.1:8001/get-request-token/?redirect={redirect_url}").json()
     request_token = res['request_token']
-    return redirect(f"http://127.0.0.1:8001/login/?request_token={request_token}")
+    return redirect(f"http://127.0.0.1:8001/get_auth_token/?request_token={request_token}")
 
 @login_required
 def profile(request):
@@ -21,4 +21,4 @@ def home_page(request):
 def logout(request):
     user_logout(request)
     messages.info(request, 'You have successfully logged out.')
-    return redirect('home_page')
+    return redirect(f"http://127.0.0.1:8001/logout/?next={request.build_absolute_uri('/')}")
