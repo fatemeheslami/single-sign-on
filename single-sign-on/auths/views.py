@@ -28,6 +28,7 @@ def login(request):
                 password = form.cleaned_data['password']
             )
             user_login(request , user)
+            print(user.username)
             return redirect(reverse('get_auth_token') + '?request_token=' + request.GET['request_token'])
     
     else:
@@ -39,14 +40,19 @@ def login(request):
     }
     return render(request , 'auths/login.html' , context=context)
 
-@login_required
+# @login_required(redirect_field_name=None)
 def get_auth_token(request):
-    request_token = request.GET['request_token']
-    record = Authentication.objects.get(request_token = request_token)
-    record.auth_token = my_function()
-    record.user = request.user
-    record.save()
-    return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+    if request.user.is_authenticated:
+        print('helloooo')
+        request_token = request.GET['request_token']
+        record = Authentication.objects.get(request_token = request_token)
+        record.auth_token = my_function()
+        record.user = request.user
+        record.save()
+        return redirect(record.redirect_url + '?auth_token=' + record.auth_token)
+    else:
+        return redirect(reverse('login') + '?request_token=' + request.GET['request_token'])
+
     
 def check_auth_token(request):
     try:
