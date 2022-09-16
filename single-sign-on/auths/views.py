@@ -90,4 +90,4 @@ def register(request) :
 def logout(request):
     user_logout(request)
     messages.info(request, 'You have successfully logged out.')
-    return redirect(request.GET('next'))
+    return redirect(request.GET['next'])
