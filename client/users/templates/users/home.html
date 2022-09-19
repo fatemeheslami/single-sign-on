@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="">
         <style>
+          {% load static %}
             .intro {
                 display: flex;
                 flex-direction: column;
@@ -20,7 +21,7 @@
                 align-items: center;
                 width: 100%;
                 height: 768px;
-                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80");
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("{% static 'users/uni.jpg' %}");
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -47,6 +48,7 @@
                 font-size: 14px;
                 font-weight: bold;
                 padding: 3px 7px;
+                margin-right: 10px;
               }
               a{
                 text-decoration: none !important;
@@ -54,17 +56,20 @@
         </style>
     </head>
     <body>
+      {% load static %}
         {% comment %} <h1>Home Page</h1>
         <p class="text-center"><a href="{% url 'profile' %}">Profile</a>.</p> {% endcomment %}
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="intro">
-            <h1>A Web Developer</h1>
-            <p>I am a web developer and I love to create websites.</p>
-            <p class="btn-profile"><a href="{% url 'profile' %}">Profile</a></p>
-            <p class="btn-profile"><a href='http://localhost:8002/login'>sess</a></p>
-            <p class="btn-profile"><a href='http://localhost:8003/login'>exam</a></p>
+            <h1>دانشگاه شهرکرد</h1>
+            <p></p>
+            <div class="d-flex">
+              <p class="btn-profile mr-3"><a href="{% url 'profile' %}">Profile</a></p>
+              <p class="btn-profile mr-3"><a href='http://localhost:8002/login'>sess</a></p>
+              <p class="btn-profile mr-3"><a href='http://localhost:8003/login'>exam</a></p>
+            </div>
           </div>
         
         <script src="" async defer></script>

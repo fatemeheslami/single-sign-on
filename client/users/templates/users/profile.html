@@ -47,6 +47,7 @@
                 width: 350px;
                 max-width: 100%;
                 text-align: center;
+                height:300px;
             }
             .card-container .pro {
                 color: #231E39;
@@ -100,8 +101,8 @@
             <img class="img-profile rounded-circle" src="{% static 'users/image.jpg' %}">
             <h3>{{request.user.username}}</h3>
             <h6>{{request.user.email}}</h6>
-            <p class="mt-4">User interface designer and <br/> front-end developer</p>
-            <div class="skills">
+            {% comment %} <p class="mt-4">User interface designer and <br/> front-end developer</p> {% endcomment %}
+            {% comment %} <div class="skills">
                 <h6>Skills</h6>
                 <ul>
                     <li>Front End Development</li>
@@ -111,7 +112,7 @@
                     <li>Vue js</li>
                     <li>Nuxt js</li>
                 </ul>
-            </div>
+            </div> {% endcomment %}
         </div>
         
         <script src="" async defer></script>

@@ -10,16 +10,59 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <link rel="stylesheet" href="">
+        <style>
+            .table-bordered{
+                border: 1px solid black;
+            }
+            body{
+                direction: ltr;
+            }
+        </style>
     </head>
     <body>
-        <h1>Exam</h1>
-        <h3>{{request.user.username}}</h3>
-        <h6>{{request.user.email}}</h6>
+        {% load static %}
+        <div class="mt-3 mr-3 d-flex justify-content-end">
+            <img src="{% static 'exam/eduLogo.png' %}">
+        </div>
+        {% comment %} <h1>Exam</h1> {% endcomment %}
+        <h3 class="ml-3 mb-3">نام کاربری: {{request.user.username}}</h3>
+        <h6 class="ml-3 mb-3">ایمیل: {{request.user.email}}</h6>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        
+        <div class="container">
+            <div class="card mt-5">
+                <div class="card-header d-flex justify-content-end">
+                    آزمون های من
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                          <tr>
+                            <th  class="bg-primary" scope="col"></th>
+                            <th  class="bg-primary" scope="col"></th>
+                            <th  class="bg-primary" scope="col">مدت زمان</th>
+                            <th  class="bg-primary" scope="col">زمان برگزاری</th>
+                            <th  class="bg-primary" scope="col">عنوان آزمون - عنوان درس</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="table-secondary">
+                            {% comment %} <th scope="row">10</th> {% endcomment %}
+                            <td><button type="button" class="btn btn-outline-info">ارسال/مشاهده فایلها</button></td>
+                            <td><button type="button" class="btn btn-outline-primary">در آزمون شرکت کرده اید</button></td>
+                            <td>۱۴۰</td>
+                            <td>۱۴۰۱/۲/۱۱ ساعت ۳۰ : ۱۵</td>
+                            <td>ميانترم-فيزيك۲-۲-۱۴۰۰ - فیزیک ۲ گروه (۸)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+              </div>
+        </div>
         <script src="" async defer></script>
     </body>
 </html>
