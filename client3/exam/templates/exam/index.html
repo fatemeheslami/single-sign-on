@@ -22,15 +22,12 @@
     <body>
         {% load static %}
         <div class="mt-3 mr-3 d-flex justify-content-between">
-            <button type="button" class="mt-3 ml-3 btn btn-outline-info">ورود/ثبت نام</button>
+            {% comment %} <button type="button" class="mt-3 ml-3 btn btn-outline-info">ورود/ثبت نام</button> {% endcomment %}
+            <p><a href="{% url 'index' %}">ورود/ثبت نام</a></p>
             <img src="{% static 'exam/eduLogo.png' %}">
         </div>
         <img class="body-exam" src="{% static 'exam/Carousel.jpg' %}">
-        
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
+
         <script src="" async defer></script>
     </body>
 </html>
